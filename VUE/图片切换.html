@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图片切换</title>
+    <style>
+        #app{
+            position: relative;
+            width: 500px;
+            height:300px;
+            margin:auto;
+            top:200px;
+        }
+        img{
+            width: 500px;
+            height:300px;
+        }
+        .left{
+            position: absolute;
+            left:0;
+            top:0;
+            bottom:0;
+            margin:auto;
+            z-index: 1;
+            width: 40px;
+            height: 20px;
+        }
+        .right{
+            position: absolute;
+            right:0;
+            top:0;
+            bottom:0;
+            margin: auto;
+            z-index: 1;
+            width: 40px;
+            height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <img :src="imgArr[index]" alt="">
+        <button class="left" @click="pre" v-show="index">pre</button>
+        <button class="right" @click="next" v-show="index<imgArr.length-1">next</button>
+    </div>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                imgArr:["./img/1.jpg","./img/2.jpg","./img/3.jpg","./img/4.jpg","./img/5.jpg"],
+                index:0,
+            },
+            methods:{
+                pre:function(){
+                    this.index--;
+                },
+                next:function(){
+                    this.index++;
+                }
+            }
+        })
+    </script>
+</body>

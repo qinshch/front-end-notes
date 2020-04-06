@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>el：挂载点</title>
+</head>
+<body id="body">
+    {{ message }}
+    <h2 id="app" class="app">
+        {{ message }}
+        <span>{{ message}}</span>
+    </h2>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            //el: ".app",
+            //el: "div",
+            //el: "#body", 
+            //vue.js:634 [Vue warn]: Do not mount Vue to <html> or <body> - mount to normal elements instead.
+            data:{
+                message:"黑马程序员"
+            }
+        })
+    </script>
+</body>
+
+<!-- el的作用：设置Vue实例挂载的元素 -->
+<!-- div优点：没有其他的样式 -->
+<!-- 最好使用id选择器 -->
+<!-- 双标签才能使用 -->
+<!-- 作用范围：el的命中元素及其内部的后代元素 -->
+<!-- 可以使用其他双标签但是不能使用HTML和BODY -->

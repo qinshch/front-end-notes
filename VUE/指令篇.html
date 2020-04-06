@@ -1,0 +1,75 @@
+<!--三种类型：
+1.内容绑定，事件绑定：v-text, v-html, v-on
+2.显示切换，属性绑定: v-show, v-if, v-bind
+3.列表循环，表单元素绑定: v-for, v-on补充，v-model-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue指令学习</title>
+    <style>
+        .active{
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- v-text -->
+        <h2 v-text="message+'添加'">lalala</h2>
+        <h2>{{ message + "添加"}}lalala</h2>
+        <!-- v-html -->
+        <p v-html="message"></p>
+        <p v-text="message"></p>
+        <p v-html="content"></p>
+        <p v-text="content"></p>
+        <!-- v-on(@) -->
+        <input type="button" value="v-on指令" v-on:click="doIt">
+        <input type="button" value="v-on简写" @click="doIt">
+        <h2 @click="changeFood">{{ food }}</h2>
+        <!-- v-show -->
+        <input type="button" value="changeShow" @click="changeIsShow">
+        <img v-show="isShow" src="./img/bear.gif" alt="bear">
+        <img v-show="age>=18" src="./img/bear.gif" alt="bear">
+        <!-- v-if -->
+        <img v-if="isShow" src="./img/bear.gif" alt="bear">
+        <!-- v-bind: 属性名=表达式 rg: src, title, class-->
+        <img v-bind:class="isActive?'active':''">
+        <img :class="{acive:isActive}">
+    </div>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data:{
+                message: "xiaohei!!!",
+                content: "<h3>变大了</h3>",
+                food: "orange",
+                isShow: false,
+                age: 17
+            },
+            methods:{
+                doIt:function(){
+                    alert("做IT");
+                },
+                changeFood:function(){
+                    this.food+=" good";
+                },
+                changeIsShow: function(){
+                    this.isShow = !this.isShow;
+                }
+            }
+        })
+    </script>
+</body>
+
+<!-- v-text: 放在前标签内，替换全部内容；{{}}差值表达式只替换部分内容；都可以用表达式-->
+<!-- v-html设置元素的innerHTML,有标签则会被解析成html元素，而v-text只会为文本 -->
+<!-- v-on(@)可用this访问data中的数据，并通过,methods实现实时更新 -->
+<!-- v-show修改元素的display,实现显示隐藏，后面的元素都被解析为布尔值，且更改后会实时更新 -->
+<!-- v-if显示内容的表现与v-show差不多，但不是设置display，而是改变DOM树，因此消耗更大 -->
+<!-- v-bind绑定属性，写法v-bind:属性名，简写为:属性名，动态增减class用三元表达式或对象 -->
