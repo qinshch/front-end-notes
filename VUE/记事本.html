@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>记事本</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        h1{
+            text-align: center;
+            color: saddlebrown;
+            line-height: 120px;
+            font-size: 50px;
+        }
+        input{
+            display: block;
+            width: 300px;
+            font-size: large;
+            margin: auto;
+            border: 1px gray solid;
+            padding: 5px 0;
+        }
+        ul{
+            margin: auto;
+            width: 300px;
+            list-style: none;
+
+        }
+        ul li{
+            position: relative;
+            font-size: large;
+            padding: 5px 0;
+            border: 1px gray solid;
+        }
+        div ul li button{
+            position: absolute;
+            right:5px;
+        }
+        div span{
+            margin-left:127px;
+        }
+        #clear{
+            margin-right: 127px;
+            margin-left:180px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>记事本</h1>
+        <input type="text" placeholder="Please enter..." v-model="input" @keyup.enter="addtodo">
+
+        <ul>
+            <li v-for="(item,index) in todo">
+                {{ index+1 }}.&nbsp;&nbsp;&nbsp;&nbsp;{{ item }}
+                <button @click="remove(index)">删</button>
+            </li>
+        </ul>
+        <span v-show="todo.length">{{ todo.length }} items left</span>
+        <button id="clear" @click="clear" v-show="todo.length">Clear</button>
+    </div>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data:{
+                todo: ["打代码"],
+                input: ""
+            },
+            methods:{
+                addtodo:function(){
+                    this.todo.push(this.input);
+                    this.input = "";
+                },
+                clear:function(){
+                    while(this.todo.pop()){}
+                },
+                remove:function(index){
+                    this.todo.splice(index, 1);
+                }
+            }
+        })
+    </script>
+</body>

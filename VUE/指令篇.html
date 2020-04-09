@@ -30,6 +30,9 @@
         <input type="button" value="v-on指令" v-on:click="doIt">
         <input type="button" value="v-on简写" @click="doIt">
         <h2 @click="changeFood">{{ food }}</h2>
+        <!-- v-on: 传递自定义参数，事件修饰符 -->
+        <input type="button" value="v-on传参" @click="doIt1('nihao')">
+        <input type="text" @keyup.enter="sayHi">
         <!-- v-show -->
         <input type="button" value="changeShow" @click="changeIsShow">
         <img v-show="isShow" src="./img/bear.gif" alt="bear">
@@ -39,6 +42,14 @@
         <!-- v-bind: 属性名=表达式 rg: src, title, class-->
         <img v-bind:class="isActive?'active':''">
         <img :class="{acive:isActive}">
+        <!-- v-for -->
+        <button @click="add">add list</button>
+        <ul>
+            <li v-for="(item,index) in arr">{{ index }}::{{ item }}</li>
+            <li v-for="(item, index) in arrObj">{{ item.name }}</li>
+        </ul>
+        <!-- v-model双向数据绑定 -->
+        <input type="text" v-model="message">
     </div>
     <!-- 开发环境版本，包含了有帮助的命令行警告 -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -50,17 +61,32 @@
                 content: "<h3>变大了</h3>",
                 food: "orange",
                 isShow: false,
-                age: 17
+                age: 17,
+                isActive: true,
+                arr: [1,2,3,4,5],
+                arrObj: [
+                    {name: "jack"},
+                    {name: "rose"}
+                ]
             },
             methods:{
                 doIt:function(){
                     alert("做IT");
+                },
+                doIt1:function(p1){
+                    console.log("做IT1")
+                },
+                sayHi:function(){
+                    alert("吃了没？");
                 },
                 changeFood:function(){
                     this.food+=" good";
                 },
                 changeIsShow: function(){
                     this.isShow = !this.isShow;
+                },
+                add:function(){
+                    this.arr.push(this.arr.length+1);
                 }
             }
         })
@@ -73,3 +99,5 @@
 <!-- v-show修改元素的display,实现显示隐藏，后面的元素都被解析为布尔值，且更改后会实时更新 -->
 <!-- v-if显示内容的表现与v-show差不多，但不是设置display，而是改变DOM树，因此消耗更大 -->
 <!-- v-bind绑定属性，写法v-bind:属性名，简写为:属性名，动态增减class用三元表达式或对象 -->
+<!-- v-for：根据数据生成列表结构，经常与数组结合使用，语法(item,index) in arr -->
+<!-- v-model：便捷的设置和获取表单元素的值，并将绑定的数据与表单元素的值相关联 -->

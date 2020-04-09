@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>axios+vue</title>
+</head>
+<body>
+    <div id="app">
+        <h1>天知道</h1>
+        <span>
+            <input type="text" placeholder="请输入搜索的城市..." v-model="city" @keyup.enter="search">
+            <button @click="search">搜索</button>
+        </span>
+        <ul style="list-style: none;">
+            <li v-for="item in resultWeather">{{item}}</li>
+        </ul>
+    </div>
+    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        /*
+            接口：获取城市天气
+            请求地址：http://wthrcdn.etouch.cn/weather_mini
+            请求方法：get
+            请求参数：city
+            相应内容：天气信息
+        */
+        var app = new Vue({
+            el: "#app",
+            data:{
+                city: "", 
+                resultWeather:[]
+            },
+            methods:{
+                search:function(){
+                    axios.get("http://wthrcdn.etouch.cn/weather_mini?city="+this.city)
+                    .then(responce=>{
+                        for(let key in responce.data.data.forecast)
+                        this.resultWeather.push(key+":"+JSON.stringify(responce.data.data.forecast[key]));
+                    },err=>{
+                        alert("error:"+err);
+                    })
+                }
+            }
+        })
+    </script>
+</body>
